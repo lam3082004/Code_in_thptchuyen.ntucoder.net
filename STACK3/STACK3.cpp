@@ -11,8 +11,10 @@ int main()
     ios::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
-    //    freopen("l.inp","r",stdin);
-    //      freopen("l.out","w",stdout);
+#ifndef ONLINE_JUDGE
+    freopen("l.inp", "r", stdin);
+    freopen("l.out", "w", stdout);
+#endif // ONLINE_JUDGE
     cin >> s;
     fo(i, 0, s.size() - 1)
     {
