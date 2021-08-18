@@ -4,34 +4,46 @@
 // Tất cả các phần tử của dãy số đều là bội của 3.
 // Nếu cộng thêm 1 thì các phần tử này sẽ trở thành số chính phương.
 // Yêu cầu: Hãy tìm phần tử thứ s của dãy số sau khi đã được sắp xếp tăng dần.
-
-// Dữ liệu: Một dòng duy nhất đưa ra số nguyên s, k. (1<=s,k<=10^18)
-
-// Kết quả: Đưa ra  một dòng duy nhất là  số nguyên duy nhất là kết quả cho bài toán chia dư cho k.
 #include <bits/stdc++.h>
+#define lo long long
+#define KKH "I21052020F"
+#define fi first
+#define se second
+#define BIT(x, k) ((x >> k) & 1)
 using namespace std;
-long long s, k, t;
-long long nhan(long long a, long long b, long long c)
+void START()
 {
-    if (b == 0)
-        return 0;
-    long long t = nhan(a, b / 2, c);
-    t = (t + t) % c;
-    if (b % 2 == 1)
-        t = (t + a) % c;
-    return t;
+#ifdef toilagun2004
+    freopen(KKH ".inp", "r", stdin);
+    freopen(KKH ".out", "w", stdout);
+#endif // toilagun2004
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+}
+lo s, k;
+lo na(lo a, lo b, lo mod)
+{
+    a %= mod;
+    b %= mod;
+    lo q = (long double)a * b / mod;
+    return ((a * b - q * mod) % mod + mod) % mod;
 }
 int main()
 {
+    START();
     cin >> s >> k;
-    if (s % 2 == 0)
+    lo dau = 1, cuoi = 2 * s, giua, t;
+    while (dau <= cuoi)
     {
-        t = s / 2 * 3 - 1;
-        cout << (nhan(t % k, t % k, k) + k - 1) % k;
+        giua = (dau + cuoi) >> 1;
+        if (giua - giua / 3 >= s)
+        {
+            t = giua % k;
+            cuoi = giua - 1;
+        }
+        else
+            dau = giua + 1;
     }
-    if (s % 2 == 1)
-    {
-        t = (s - 1) / 2 * 3 + 1;
-        cout << (nhan(t % k, t % k, k) + k - 1) % k;
-    }
+    cout << (na(t, t, k) - 1) % k;
 }
