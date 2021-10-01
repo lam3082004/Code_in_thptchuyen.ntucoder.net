@@ -5,45 +5,37 @@
 // Nếu cộng thêm 1 thì các phần tử này sẽ trở thành số chính phương.
 // Yêu cầu: Hãy tìm phần tử thứ s của dãy số sau khi đã được sắp xếp tăng dần.
 #include <bits/stdc++.h>
-#define lo long long
-#define KKH "I21052020F"
-#define fi first
-#define se second
-#define BIT(x, k) ((x >> k) & 1)
+#define l long long
 using namespace std;
-void START()
+l s, k;
+l nhan(l x, l y, l z)
 {
-#ifdef toilagun2004
-    freopen(KKH ".inp", "r", stdin);
-    freopen(KKH ".out", "w", stdout);
-#endif // toilagun2004
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-    cout.tie(0);
+    if (y == 0)
+        return 0;
+    else
+    {
+        l q = nhan(x, y / 2, z);
+        q += q;
+        q %= z;
+        if (y % 2 == 0)
+            return q;
+        else
+            return (q + x) % z;
+    }
 }
-lo s, k;
-lo na(lo a, lo b, lo mod)
+l st()
 {
-    a %= mod;
-    b %= mod;
-    lo q = (long double)a * b / mod;
-    return ((a * b - q * mod) % mod + mod) % mod;
+    if (s % 2 == 0)
+    {
+        return nhan(3 * (s / 2), 3 * (s / 2) - 2, k);
+    }
+    else
+    {
+        return nhan(3 * (s / 2), 3 * (s / 2) + 2, k);
+    }
 }
 int main()
 {
-    START();
     cin >> s >> k;
-    lo dau = 1, cuoi = 2 * s, giua, t;
-    while (dau <= cuoi)
-    {
-        giua = (dau + cuoi) >> 1;
-        if (giua - giua / 3 >= s)
-        {
-            t = giua % k;
-            cuoi = giua - 1;
-        }
-        else
-            dau = giua + 1;
-    }
-    cout << (na(t, t, k) - 1) % k;
+    cout << st();
 }
