@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+#define ll long long
+#define fo(i, a, b) for (int i = a; i <= b; i++)
+#define nmax 1000000
+#define ii pair<ll, ll>
+#define fi first
+#define se second
+using namespace std;
+deque<int> Max, Min;
+ll n, a[nmax], q, kq = 0;
+int main()
+{
+#ifndef ONLINE_JUDGE
+    freopen("l.inp", "r", stdin);
+    freopen("l.out", "w", stdout);
+#endif // ONLINE_JUDGE
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    cin >> n >> q;
+    fo(i, 1, n) cin >> a[i];
+    int j = 1;
+    fo(i, 1, n)
+    {
+        while(Max.size() && a[Max.front()] < a[i])
+            Max.pop_front();
+        while(Min.size() && a[Min.front()] > a[i])
+            Min.pop_front();
+        Max.push_front(i);
+        Min.push_front(i);
+        while(j < i && a[Max.back()] - a[Min.back()] > q)
+        {
+            j++;
+            if(Max.back() < j)
+                Max.pop_back();
+            if(Min.back() < j)
+                Min.pop_back();
+        }
+        kq += i - j + 1;
+    }
+    cout << kq;
+}
